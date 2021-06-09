@@ -1,0 +1,31 @@
+html, body{
+    height: 100%;
+}
+td{
+    border: 1px solid grey;
+    height: 100px;
+    width: 120px;
+    vertical-align: text-top;
+    padding-left: 10px;
+    padding-top: 5px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+th{
+    background-color: grey;
+    color: white;
+    border-collapse: collapse;
+    border: 1px solid rgb(97, 96, 96);
+    padding: 10px;
+    font-weight: bold;
+}
+
+table{
+    border-collapse: collapse;
+    
+}
+
+.empty{
+    background-color: gainsboro;
+}
