@@ -3,13 +3,16 @@
     $dbname = 'calendar';
     $username = 'calendar';
     $password = 'jj8_XPRqanXwKu0d';
+
+    $arrayTestOfMonth = array('January','February', 'March', "April", 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'); //Tableau de test des mois
  
-    $dsn = "mysql:host=$host;dbname=$dbname"; 
+    $connect = "mysql:host=$host;dbname=$dbname"; 
     // récupérer tous les utilisateurs
-    $sql = "SELECT * FROM birthdays";
+    $sql = "SELECT * FROM events";
      
+    //CONNEXION A LA BDD
     try{
-     $pdo = new PDO($dsn, $username, $password);
+     $pdo = new PDO($connect, $username, $password);
      $stmt = $pdo->query($sql);
      
      if($stmt === false){
@@ -19,6 +22,27 @@
     }catch (PDOException $e){
       echo $e->getMessage();
     }
+
+    //AJOUT DANS LA BDD
+    if (!empty($_GET['dateEvent']) && !empty($_GET['eventName'])) {
+      $fullDate = $_GET['dateEvent'];
+      $eventName = $_GET['eventName'];
+      $dateCut = explode("-", $fullDate);
+      $eventDay = $dateCut[2];
+      $eventMonth = $arrayTestOfMonth[(int)$dateCut[1]-1];
+      $eventYear = $dateCut[0];
+      $sql = "INSERT INTO birthdays(day,month,year,message) 
+            VALUES($eventDay,'$eventMonth',$eventYear,'$eventName')";
+      $pdo->exec($sql);
+      
+      header("Location: test.php");
+    }
+    else{
+      echo "Un champ n'est pas rempli";
+    }
+
+    
+    
   ?>
 
 <!DOCTYPE html>
@@ -31,7 +55,12 @@
     <title>PHP partie 9</title>
 </head>
 <body>
-<h1>Liste des utilisateurs</h1>
+  <form action="#" action="get">
+        <label for="eventName">Ajouter un événement</label>
+        <input type="date" name="dateEvent" id="dateEvent">
+        <input type="text" name="eventName" id="eventName">
+        <button type="submit">Ajouter l'évènement</button>
+  </form>
  <table>
    <thead>
      <tr>
@@ -42,12 +71,18 @@
      </tr>
    </thead>
    <tbody>
-     <?php while($row = $stmt->fetch(PDO::FETCH_ASSOC)) : ?>
-     <tr>
+     <?php while($row = $stmt->fetch()) : ?>
+
+     <?php 
+        if($row['month'] == "July"){
+          echo 'YES';
+        }
+      ?>
+      <tr>
        <td><?php echo htmlspecialchars($row['day']); ?></td>
        <td><?php echo htmlspecialchars($row['month']); ?></td>
        <td><?php echo htmlspecialchars($row['year']); ?></td>
-       <td><?php echo $row['event']; ?></td>
+       <td><?php echo $row['message']; ?></td>
      </tr>
      <?php endwhile; ?>
    </tbody>

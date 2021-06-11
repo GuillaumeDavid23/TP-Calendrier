@@ -1,8 +1,21 @@
-html, body{
-    height: 100%;
+@keyframes Magic {
+    from {
+        opacity: 0%;
+    }
+
+    to {
+        opacity: 100%;
+    }
 }
 
-td{
+html,
+body {
+    height: 100%;
+    background-color: wheat;
+}
+
+td {
+    background-color: lightgray;
     border: 1px solid grey;
     height: 100px;
     width: 100px;
@@ -11,41 +24,51 @@ td{
     padding-top: 5px;
     cursor: pointer;
     transition: 0.2s;
+    animation: Magic 1s;
+    color: teal;
 }
-span{
+
+span {
+    color: black;
     font-size: 20px;
     font-weight: 700;
 }
-th{
+
+th {
     background-color: grey;
     color: white;
     border-collapse: collapse;
     border: 1px solid rgb(97, 96, 96);
     padding: 10px;
     font-weight: bold;
+    animation: Magic 1s;
 }
 
-table{
+table {
     border-collapse: collapse;
-    
 }
 
-.empty{
+.empty {
     background-color: gainsboro;
 }
+
 .calendar {
     display: flex;
-    align-items: flex-start;
+    justify-content: center;
     padding: 0 50px;
 }
-.add{
+
+.add {
+    height: 200px;
     margin-left: 20px;
+    margin-top: 50px;
     display: flex;
+    align-items: center;
     flex-direction: column;
 }
 
-.focus{
-    background-color: red;
+.focus {
+    background-color: rgba(255, 109, 109, 0.8);
     transform: scale(1.2);
     transition: 1s;
 }
