@@ -21,9 +21,9 @@
     echo $e->getMessage();
     }
     //AJOUT DANS LA BDD
-    if (!empty($_GET['dateEvent']) && !empty($_GET['eventName'])) {
-        $fullDate = $_GET['dateEvent'];
-        $eventName = $_GET['eventName'];
+    if (!empty($_POST['dateEvent']) && !empty($_POST['eventName'])) {
+        $fullDate = $_POST['dateEvent'];
+        $eventName = $_POST['eventName'];
         $dateCut = explode("-", $fullDate);
         $eventDay = $dateCut[2];
         $eventMonth = $arrayTestOfMonth[(int)$dateCut[1]-1];
@@ -188,9 +188,9 @@
 </head>
 
 <body>
-    <form action="#" method="POST">
-        <label for="month">Choisissez un mois et une année</label>
-        <input type="month" name="month" id="month" required>
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" id="formToCreateCalendar">
+        <label for="date">Choisissez un mois et une année</label>
+        <input type="month" name="month" id="date" required>
         <button type="submit">Envoyer</button>
     </form>
     <h1 id="monthAndYear">
@@ -222,10 +222,10 @@
         </table>
     </div>
     <div class="add">
-    <form action="#" action="POST">
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
         <label for="eventName">Ajouter un événement</label>
-        <input type="date" name="dateEvent" id="dateEvent">
-        <input type="text" name="eventName" id="eventName">
+        <input type="date" name="dateEvent" id="dateEvent" required>
+        <input type="text" name="eventName" id="eventName" required>
         <button type="submit">Ajouter l'évènement</button>
     </form>
     </div>
