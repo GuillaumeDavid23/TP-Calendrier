@@ -42,27 +42,6 @@
     else{
         function CreateCalendar()
         {
-            $host = 'localhost';
-            $dbname = 'calendar';
-            $username = 'calendar';
-            $password = 'jj8_XPRqanXwKu0d';
-            $connect = "mysql:host=$host;dbname=$dbname"; 
-            // récupérer tous les utilisateurs
-            $sql = "SELECT * FROM events";
-            
-            //CONNEXION A LA BDD
-            try{
-                $pdo = new PDO($connect, $username, $password);
-                $stmt = $pdo->query($sql);
-                if($stmt === false){
-                die("Erreur");
-                }
-            }catch (PDOException $e){
-                echo $e->getMessage();
-            }
-            
-            $dataDB = $stmt -> fetchAll();
-            
             //définition de la langue.
             setlocale(LC_TIME, ['fr', 'fra', 'fr_FR']);
             
@@ -78,6 +57,30 @@
             $endCalendar = true;//Test de la fin du calendrier
             $empty = false;//Test du select
             $emptyCase = '<td class="empty"></td>';
+
+            //INFO BDD
+            $host = 'localhost';
+            $dbname = 'calendar';
+            $username = 'calendar';
+            $password = 'jj8_XPRqanXwKu0d';
+            $connect = "mysql:host=$host;dbname=$dbname"; 
+            // récupérer tous les events
+            $sql = "SELECT * FROM events";
+            
+            //CONNEXION A LA BDD
+            try{
+                $pdo = new PDO($connect, $username, $password);
+                $stmt = $pdo->query($sql);
+                if($stmt === false){
+                die("Erreur");
+                }
+            }catch (PDOException $e){
+                echo $e->getMessage();
+            }
+            
+            $dataDB = $stmt -> fetchAll();
+            
+            
 
               //Attribution du premier jour.
             if((int)$keyOfFirstDay == 0){
